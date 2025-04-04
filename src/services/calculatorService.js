@@ -51,6 +51,16 @@ class CalculatorService {
     percentage(value, percent) {
       return (value * percent) / 100;
     }
+    
+    /**
+     * Calcule le cosinus d'un angle en degrés
+     * @param {number} angle - L'angle en degrés
+     * @returns {number} Le cosinus de l'angle
+     */
+    cos(angle) {
+      const radians = (angle * Math.PI) / 180;
+      return Math.cos(radians);
+    }
   }
   
   module.exports = new CalculatorService();

@@ -35,4 +35,11 @@ describe('CalculatorService', () => {
     expect(calculatorService.percentage(0, 15)).toBe(0);
     expect(calculatorService.percentage(100, 0)).toBe(0);
   });
+  
+  test('cos devrait calculer correctement le cosinus d\'un angle en degrés', () => {
+    expect(calculatorService.cos(0)).toBe(1);
+    expect(calculatorService.cos(90)).toBeCloseTo(0, 10);
+    expect(calculatorService.cos(180)).toBeCloseTo(-1, 10);
+    expect(calculatorService.cos(360)).toBeCloseTo(1, 10);
+  });
 });

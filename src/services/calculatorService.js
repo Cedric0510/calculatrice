@@ -90,6 +90,19 @@ class CalculatorService {
     power(base, exponent) {
       return Math.pow(base, exponent);
     }
+    
+    /**
+     * Calcule la racine carrée d'un nombre
+     * @param {number} value - Le nombre dont on veut calculer la racine carrée
+     * @returns {number} La racine carrée du nombre
+     * @throws {Error} Si le nombre est négatif
+     */
+    sqrt(value) {
+      if (value < 0) {
+        throw new Error('Impossible de calculer la racine carrée d\'un nombre négatif');
+      }
+      return Math.sqrt(value);
+    }
   }
   
   module.exports = new CalculatorService();

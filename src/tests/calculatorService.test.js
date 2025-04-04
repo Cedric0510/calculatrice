@@ -61,4 +61,15 @@ describe('CalculatorService', () => {
     expect(calculatorService.power(2, -2)).toBe(0.25);
     expect(calculatorService.power(0, 5)).toBe(0);
   });
+  
+  test('sqrt devrait calculer correctement la racine carrée d\'un nombre', () => {
+    expect(calculatorService.sqrt(4)).toBe(2);
+    expect(calculatorService.sqrt(9)).toBe(3);
+    expect(calculatorService.sqrt(2)).toBeCloseTo(1.414, 3);
+    expect(calculatorService.sqrt(0)).toBe(0);
+  });
+  
+  test('sqrt devrait lancer une erreur pour les nombres négatifs', () => {
+    expect(() => calculatorService.sqrt(-1)).toThrow('Impossible de calculer la racine carrée d\'un nombre négatif');
+  });
 });

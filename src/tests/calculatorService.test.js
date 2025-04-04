@@ -53,4 +53,12 @@ describe('CalculatorService', () => {
     expect(() => calculatorService.tan(90)).toThrow('Tangente non définie pour cet angle');
     expect(() => calculatorService.tan(270)).toThrow('Tangente non définie pour cet angle');
   });
+
+  test('power devrait calculer correctement la puissance d\'un nombre', () => {
+    expect(calculatorService.power(2, 3)).toBe(8);
+    expect(calculatorService.power(5, 2)).toBe(25);
+    expect(calculatorService.power(10, 0)).toBe(1);
+    expect(calculatorService.power(2, -2)).toBe(0.25);
+    expect(calculatorService.power(0, 5)).toBe(0);
+  });
 });

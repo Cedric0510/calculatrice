@@ -1,17 +1,11 @@
 const calculatorService = require('../services/calculatorService');
 
-/**
- * Contrôleur pour les opérations de calculatrice
- */
 class CalculatorController {
-  /**
-   * Gère la requête d'addition
-   */
+
   add(req, res) {
     try {
       const { a, b } = req.body;
       
-      // Validation des paramètres
       if (typeof a !== 'number' || typeof b !== 'number') {
         return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
       }
@@ -23,14 +17,10 @@ class CalculatorController {
     }
   }
 
-  /**
-   * Gère la requête de soustraction
-   */
   subtract(req, res) {
     try {
       const { a, b } = req.body;
       
-      // Validation des paramètres
       if (typeof a !== 'number' || typeof b !== 'number') {
         return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
       }
@@ -42,14 +32,10 @@ class CalculatorController {
     }
   }
 
-  /**
-   * Gère la requête de multiplication
-   */
   multiply(req, res) {
     try {
       const { a, b } = req.body;
       
-      // Validation des paramètres
       if (typeof a !== 'number' || typeof b !== 'number') {
         return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
       }
@@ -65,7 +51,6 @@ class CalculatorController {
     try {
       const { a, b } = req.body;
       
-      // Validation des paramètres
       if (typeof a !== 'number' || typeof b !== 'number') {
         return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
       }
@@ -81,7 +66,6 @@ class CalculatorController {
     try {
       const { value, percent } = req.body;
       
-      // Validation des paramètres
       if (typeof value !== 'number' || typeof percent !== 'number') {
         return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
       }
@@ -98,7 +82,6 @@ class CalculatorController {
     try {
       const { angle } = req.body;
       
-      // Validation du paramètre
       if (typeof angle !== 'number') {
         return res.status(400).json({ error: 'Le paramètre doit être un nombre' });
       }
@@ -110,14 +93,10 @@ class CalculatorController {
     }
   }
 
-  /**
-   * Gère la requête de calcul de la tangente
-   */
   tan(req, res) {
     try {
       const { angle } = req.body;
       
-      // Validation du paramètre
       if (typeof angle !== 'number') {
         return res.status(400).json({ error: 'Le paramètre doit être un nombre' });
       }
@@ -126,6 +105,21 @@ class CalculatorController {
       return res.json({ result });
     } catch (error) {
       return res.status(400).json({ error: error.message });
+    }
+  }
+
+  power(req, res) {
+    try {
+      const { base, exponent } = req.body;
+      
+      if (typeof base !== 'number' || typeof exponent !== 'number') {
+        return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
+      }
+      
+      const result = calculatorService.power(base, exponent);
+      return res.json({ result });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   }
 }

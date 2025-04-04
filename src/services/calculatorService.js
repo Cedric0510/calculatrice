@@ -80,6 +80,16 @@ class CalculatorService {
       const radians = (angle * Math.PI) / 180;
       return Math.tan(radians);
     }
+
+    /**
+     * Calcule la puissance d'un nombre
+     * @param {number} base - La base
+     * @param {number} exponent - L'exposant
+     * @returns {number} Résultat de base élevée à la puissance exponent
+     */
+    power(base, exponent) {
+      return Math.pow(base, exponent);
+    }
   }
   
   module.exports = new CalculatorService();

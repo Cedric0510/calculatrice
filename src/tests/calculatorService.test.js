@@ -42,4 +42,15 @@ describe('CalculatorService', () => {
     expect(calculatorService.cos(180)).toBeCloseTo(-1, 10);
     expect(calculatorService.cos(360)).toBeCloseTo(1, 10);
   });
+  
+  test('tan devrait calculer correctement la tangente d\'un angle en degrés', () => {
+    expect(calculatorService.tan(0)).toBeCloseTo(0, 10);
+    expect(calculatorService.tan(45)).toBeCloseTo(1, 10);
+    expect(calculatorService.tan(180)).toBeCloseTo(0, 10);
+  });
+  
+  test('tan devrait lancer une erreur pour les angles où la tangente n\'est pas définie', () => {
+    expect(() => calculatorService.tan(90)).toThrow('Tangente non définie pour cet angle');
+    expect(() => calculatorService.tan(270)).toThrow('Tangente non définie pour cet angle');
+  });
 });

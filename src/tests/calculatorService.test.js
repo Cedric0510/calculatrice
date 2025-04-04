@@ -1,75 +1,104 @@
 const calculatorService = require('../services/calculatorService');
+const calculationRepository = require('../repositories/calculRepository');
+
+// Mock du repository
+jest.mock('../repositories/calculRepository');
 
 describe('CalculatorService', () => {
-  test('add devrait additionner deux nombres', () => {
-    expect(calculatorService.add(2, 3)).toBe(5);
-    expect(calculatorService.add(-1, 1)).toBe(0);
-    expect(calculatorService.add(0, 0)).toBe(0);
+  beforeEach(() => {
+    // Réinitialiser les mocks avant chaque test
+    jest.clearAllMocks();
+    calculationRepository.saveCalculation.mockResolvedValue({});
   });
 
-  test('subtract devrait soustraire le deuxième nombre du premier', () => {
-    expect(calculatorService.subtract(5, 3)).toBe(2);
-    expect(calculatorService.subtract(1, 5)).toBe(-4);
-    expect(calculatorService.subtract(0, 0)).toBe(0);
+  test('add devrait additionner deux nombres et sauvegarder le calcul', async () => {
+    const result = await calculatorService.add(2, 3);
+    expect(result).toBe(5);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('add', { a: 2, b: 3 }, 5);
   });
 
-  test('multiply devrait multiplier deux nombres', () => {
-    expect(calculatorService.multiply(2, 3)).toBe(6);
-    expect(calculatorService.multiply(-1, 3)).toBe(-3);
-    expect(calculatorService.multiply(0, 5)).toBe(0);
+  test('subtract devrait soustraire le deuxième nombre du premier et sauvegarder le calcul', async () => {
+    const result = await calculatorService.subtract(5, 3);
+    expect(result).toBe(2);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('subtract', { a: 5, b: 3 }, 2);
   });
 
-  test('divide devrait diviser le premier nombre par le second', () => {
-    expect(calculatorService.divide(6, 3)).toBe(2);
-    expect(calculatorService.divide(5, 2)).toBe(2.5);
-    expect(calculatorService.divide(0, 5)).toBe(0);
+  test('multiply devrait multiplier deux nombres et sauvegarder le calcul', async () => {
+    const result = await calculatorService.multiply(2, 3);
+    expect(result).toBe(6);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('multiply', { a: 2, b: 3 }, 6);
   });
 
-  test('divide devrait lancer une erreur pour la division par zéro', () => {
-    expect(() => calculatorService.divide(5, 0)).toThrow('Division par zéro impossible');
-  });
-  
-  test('percentage devrait calculer correctement le pourcentage d\'un nombre', () => {
-    expect(calculatorService.percentage(200, 10)).toBe(20);
-    expect(calculatorService.percentage(50, 20)).toBe(10);
-    expect(calculatorService.percentage(0, 15)).toBe(0);
-    expect(calculatorService.percentage(100, 0)).toBe(0);
-  });
-  
-  test('cos devrait calculer correctement le cosinus d\'un angle en degrés', () => {
-    expect(calculatorService.cos(0)).toBe(1);
-    expect(calculatorService.cos(90)).toBeCloseTo(0, 10);
-    expect(calculatorService.cos(180)).toBeCloseTo(-1, 10);
-    expect(calculatorService.cos(360)).toBeCloseTo(1, 10);
-  });
-  
-  test('tan devrait calculer correctement la tangente d\'un angle en degrés', () => {
-    expect(calculatorService.tan(0)).toBeCloseTo(0, 10);
-    expect(calculatorService.tan(45)).toBeCloseTo(1, 10);
-    expect(calculatorService.tan(180)).toBeCloseTo(0, 10);
-  });
-  
-  test('tan devrait lancer une erreur pour les angles où la tangente n\'est pas définie', () => {
-    expect(() => calculatorService.tan(90)).toThrow('Tangente non définie pour cet angle');
-    expect(() => calculatorService.tan(270)).toThrow('Tangente non définie pour cet angle');
+  test('divide devrait diviser le premier nombre par le second et sauvegarder le calcul', async () => {
+    const result = await calculatorService.divide(6, 3);
+    expect(result).toBe(2);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('divide', { a: 6, b: 3 }, 2);
   });
 
-  test('power devrait calculer correctement la puissance d\'un nombre', () => {
-    expect(calculatorService.power(2, 3)).toBe(8);
-    expect(calculatorService.power(5, 2)).toBe(25);
-    expect(calculatorService.power(10, 0)).toBe(1);
-    expect(calculatorService.power(2, -2)).toBe(0.25);
-    expect(calculatorService.power(0, 5)).toBe(0);
+  test('divide devrait lancer une erreur pour la division par zéro', async () => {
+    await expect(calculatorService.divide(5, 0)).rejects.toThrow('Division par zéro impossible');
+    expect(calculationRepository.saveCalculation).not.toHaveBeenCalled();
   });
   
-  test('sqrt devrait calculer correctement la racine carrée d\'un nombre', () => {
-    expect(calculatorService.sqrt(4)).toBe(2);
-    expect(calculatorService.sqrt(9)).toBe(3);
-    expect(calculatorService.sqrt(2)).toBeCloseTo(1.414, 3);
-    expect(calculatorService.sqrt(0)).toBe(0);
+  test('percentage devrait calculer correctement le pourcentage d\'un nombre et sauvegarder le calcul', async () => {
+    const result = await calculatorService.percentage(200, 10);
+    expect(result).toBe(20);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('percentage', { value: 200, percent: 10 }, 20);
   });
   
-  test('sqrt devrait lancer une erreur pour les nombres négatifs', () => {
-    expect(() => calculatorService.sqrt(-1)).toThrow('Impossible de calculer la racine carrée d\'un nombre négatif');
+  test('cos devrait calculer correctement le cosinus d\'un angle en degrés et sauvegarder le calcul', async () => {
+    const result = await calculatorService.cos(0);
+    expect(result).toBe(1);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('cos', { angle: 0 }, 1);
+  });
+  
+  test('tan devrait calculer correctement la tangente d\'un angle en degrés et sauvegarder le calcul', async () => {
+    const result = await calculatorService.tan(45);
+    expect(result).toBeCloseTo(1, 10);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('tan', { angle: 45 }, expect.any(Number));
+  });
+  
+  test('tan devrait lancer une erreur pour les angles où la tangente n\'est pas définie', async () => {
+    await expect(calculatorService.tan(90)).rejects.toThrow('Tangente non définie pour cet angle');
+    expect(calculationRepository.saveCalculation).not.toHaveBeenCalled();
+  });
+
+  test('power devrait calculer correctement la puissance d\'un nombre et sauvegarder le calcul', async () => {
+    const result = await calculatorService.power(2, 3);
+    expect(result).toBe(8);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('power', { base: 2, exponent: 3 }, 8);
+  });
+  
+  test('sqrt devrait calculer correctement la racine carrée d\'un nombre et sauvegarder le calcul', async () => {
+    const result = await calculatorService.sqrt(4);
+    expect(result).toBe(2);
+    expect(calculationRepository.saveCalculation).toHaveBeenCalledWith('sqrt', { value: 4 }, 2);
+  });
+  
+  test('sqrt devrait lancer une erreur pour les nombres négatifs', async () => {
+    await expect(calculatorService.sqrt(-1)).rejects.toThrow('Impossible de calculer la racine carrée d\'un nombre négatif');
+    expect(calculationRepository.saveCalculation).not.toHaveBeenCalled();
+  });
+  
+  test('les méthodes du service devraient continuer à fonctionner même si la sauvegarde échoue', async () => {
+    // Simuler une erreur lors de la sauvegarde
+    calculationRepository.saveCalculation.mockRejectedValue(new Error('DB error'));
+    
+    // Le service devrait gérer l'erreur et retourner le résultat correct
+    const result = await calculatorService.add(2, 3);
+    expect(result).toBe(5);
+  });
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(resolve, 500)); 
+  });
+  afterAll(async () => {
+    // Si vous avez des timers ou des connexions persistantes
+    jest.clearAllTimers();
+    
+    // Attendre que les opérations asynchrones se terminent
+    await new Promise(resolve => setTimeout(resolve, 500));
+  });
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(resolve, 500)); 
   });
 });

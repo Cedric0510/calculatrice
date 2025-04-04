@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Service pour l'API calculatrice
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=calculator_user
+      - DB_PASSWORD=calculator_password
+      - DB_NAME=calculator_db
+      - DB_PORT=3306
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
+    networks:
+      - calculator-network
+  
+  # Service pour la base de données MariaDB
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=root_password
+      - MARIADB_DATABASE=calculator_db
+      - MARIADB_USER=calculator_user
+      - MARIADB_PASSWORD=calculator_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - calculator-network
+
+networks:
+  calculator-network:
+    driver: bridge
+
+volumes:
+  db_data:

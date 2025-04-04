@@ -1,18 +1,26 @@
 {
   "name": "calculatrice",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API de calculatrice avec enregistrement des calculs dans une base de données",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "test:unit": "jest --testPathIgnorePatterns=integration",
+    "test:integration": "node src/tests/setup/setupDatabase.js && jest --testPathPattern=integration",
+    "test:all": "npm run test:unit && npm run test:integration"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Cedric0510/calculatrice.git"
   },
-  "keywords": [],
+  "keywords": [
+    "calculator",
+    "api",
+    "mariadb",
+    "devops"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -22,8 +30,13 @@
   "homepage": "https://github.com/Cedric0510/calculatrice#readme",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "mariadb": "^3.4.1"
+  },
+  "devDependencies": {
     "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
     "supertest": "^7.1.0"
   }
 }

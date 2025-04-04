@@ -28,4 +28,11 @@ describe('CalculatorService', () => {
   test('divide devrait lancer une erreur pour la division par zéro', () => {
     expect(() => calculatorService.divide(5, 0)).toThrow('Division par zéro impossible');
   });
+  
+  test('percentage devrait calculer correctement le pourcentage d\'un nombre', () => {
+    expect(calculatorService.percentage(200, 10)).toBe(20);
+    expect(calculatorService.percentage(50, 20)).toBe(10);
+    expect(calculatorService.percentage(0, 15)).toBe(0);
+    expect(calculatorService.percentage(100, 0)).toBe(0);
+  });
 });

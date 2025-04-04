@@ -41,6 +41,16 @@ class CalculatorService {
       }
       return a / b;
     }
+    
+    /**
+     * Calcule le pourcentage d'un nombre
+     * @param {number} value - Le nombre dont on veut calculer le pourcentage
+     * @param {number} percent - Le pourcentage à appliquer
+     * @returns {number} Résultat du calcul du pourcentage
+     */
+    percentage(value, percent) {
+      return (value * percent) / 100;
+    }
   }
   
   module.exports = new CalculatorService();

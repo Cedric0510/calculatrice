@@ -91,4 +91,14 @@ describe('CalculatorService', () => {
   afterAll(async () => {
     await new Promise(resolve => setTimeout(resolve, 500)); 
   });
+  afterAll(async () => {
+    // Si vous avez des timers ou des connexions persistantes
+    jest.clearAllTimers();
+    
+    // Attendre que les opérations asynchrones se terminent
+    await new Promise(resolve => setTimeout(resolve, 500));
+  });
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(resolve, 500)); 
+  });
 });

@@ -109,6 +109,25 @@ class CalculatorController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  /**
+   * Gère la requête de calcul de la tangente
+   */
+  tan(req, res) {
+    try {
+      const { angle } = req.body;
+      
+      // Validation du paramètre
+      if (typeof angle !== 'number') {
+        return res.status(400).json({ error: 'Le paramètre doit être un nombre' });
+      }
+      
+      const result = calculatorService.tan(angle);
+      return res.json({ result });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new CalculatorController();

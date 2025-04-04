@@ -61,6 +61,25 @@ class CalculatorService {
       const radians = (angle * Math.PI) / 180;
       return Math.cos(radians);
     }
+    
+    /**
+     * Calcule la tangente d'un angle en degrés
+     * @param {number} angle - L'angle en degrés
+     * @returns {number} La tangente de l'angle
+     * @throws {Error} Si l'angle correspond à une tangente infinie (90°, 270°, etc.)
+     */
+    tan(angle) {
+      // Normalisation de l'angle à [0, 360)
+      const normalizedAngle = ((angle % 360) + 360) % 360;
+      
+      // Vérification si l'angle est un cas particulier où la tangente n'est pas définie
+      if (normalizedAngle === 90 || normalizedAngle === 270) {
+        throw new Error('Tangente non définie pour cet angle');
+      }
+      
+      const radians = (angle * Math.PI) / 180;
+      return Math.tan(radians);
+    }
   }
   
   module.exports = new CalculatorService();

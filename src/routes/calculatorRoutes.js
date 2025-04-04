@@ -11,5 +11,6 @@ router.post('/percentage', calculatorController.percentage);
 router.post('/cos', calculatorController.cos);
 router.post('/tan', calculatorController.tan);
 router.post('/power', calculatorController.power);
+router.post('/sqrt', calculatorController.sqrt);
 
 module.exports = router;

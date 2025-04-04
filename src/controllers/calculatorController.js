@@ -79,6 +79,25 @@ class CalculatorController {
       return res.status(400).json({ error: error.message });
     }
   }
+
+  /**
+   * Gère la requête de calcul de pourcentage
+   */
+  percentage(req, res) {
+    try {
+      const { value, percent } = req.body;
+      
+      // Validation des paramètres
+      if (typeof value !== 'number' || typeof percent !== 'number') {
+        return res.status(400).json({ error: 'Les paramètres doivent être des nombres' });
+      }
+      
+      const result = calculatorService.percentage(value, percent);
+      return res.json({ result });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new CalculatorController();

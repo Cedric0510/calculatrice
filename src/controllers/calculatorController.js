@@ -61,9 +61,6 @@ class CalculatorController {
     }
   }
 
-  /**
-   * Gère la requête de division
-   */
   divide(req, res) {
     try {
       const { a, b } = req.body;
@@ -80,9 +77,6 @@ class CalculatorController {
     }
   }
 
-  /**
-   * Gère la requête de calcul de pourcentage
-   */
   percentage(req, res) {
     try {
       const { value, percent } = req.body;
@@ -93,6 +87,23 @@ class CalculatorController {
       }
       
       const result = calculatorService.percentage(value, percent);
+      return res.json({ result });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  
+
+  cos(req, res) {
+    try {
+      const { angle } = req.body;
+      
+      // Validation du paramètre
+      if (typeof angle !== 'number') {
+        return res.status(400).json({ error: 'Le paramètre doit être un nombre' });
+      }
+      
+      const result = calculatorService.cos(angle);
       return res.json({ result });
     } catch (error) {
       return res.status(500).json({ error: error.message });

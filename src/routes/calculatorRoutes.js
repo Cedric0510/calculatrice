@@ -9,5 +9,6 @@ router.post('/subtract', calculatorController.subtract);
 router.post('/multiply', calculatorController.multiply);
 router.post('/divide', calculatorController.divide);
 router.post('/percentage', calculatorController.percentage);
+router.post('/cos', calculatorController.cos);
 
 module.exports = router;

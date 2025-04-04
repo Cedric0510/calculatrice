@@ -1,0 +1,29 @@
+{
+  "name": "calculatrice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cedric0510/calculatrice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Cedric0510/calculatrice/issues"
+  },
+  "homepage": "https://github.com/Cedric0510/calculatrice#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}
